@@ -1,0 +1,24 @@
+
+public class Booking {
+	private String room;
+	private String activity;
+	private String name;
+	private String from;
+	private String to;
+	private String date;
+	
+	public Booking(String room, String activity, String name, String from, String to, String date) {
+		this.room = room;
+		this.activity = activity;
+		this.name = name;
+		this.from = from;
+		this.to = to;
+		this.date = date;
+	}
+	
+	public static String toString(Booking b) {
+		String a = "Room: " + b.room + " Activity: " + b.activity + " Name: " + b.name + " Date: " + b.date + " Time: From: " + b.from + " To: " + b.to;
+		return a;	
+	}
+
+}
