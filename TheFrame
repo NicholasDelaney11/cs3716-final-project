@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class TheFrame extends JFrame {
-	ArrayList<Booking> approvedBookings = new ArrayList<Booking>();
+	ArrayList<String> approvedBookings = new ArrayList<String>();
 	ArrayList<Booking> possibleBookings = new ArrayList<Booking>();
 	
 	JPanel schedPanel = new JPanel();
@@ -18,7 +18,7 @@ public class TheFrame extends JFrame {
 	
 	//Schedule tab components.
 	JLabel schedLabel = new JLabel("Schedule:");
-	static JTextArea schedDisplay = new JTextArea(20,30);
+	static JTextArea schedDisplay = new JTextArea(80,100);
 	JScrollPane scrollPane;
 	
 	//Request space tab components.
@@ -49,12 +49,13 @@ public class TheFrame extends JFrame {
 		
 		denyReqButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	
+		    	pendingReqComboBox.removeItemAt(pendingReqComboBox.getSelectedIndex());
 		    }
 		});
 		approveReqButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	String approvedReq = (String) pendingReqComboBox.getSelectedItem();
+		    	approvedBookings.add(approvedReq);
 		    	schedDisplay.append(approvedReq + "\n\n" );
 		    	
 		    }
@@ -85,7 +86,7 @@ public class TheFrame extends JFrame {
 		reqSpace.add(labelName);
 		reqSpace.add(textName);
 		reqSpace.add(labelDate);
-		reqSpace.add(textDate);
+		reqSpace.add(textDate); 
 		reqSpace.add(labelTime);
 		reqSpace.add(labelFrom);
 		reqSpace.add(textFrom);
@@ -93,8 +94,8 @@ public class TheFrame extends JFrame {
 		reqSpace.add(textTo);
 		reqSpace.add(submitReq);
 		
-		instructions = new JTextArea("Welcome to Scheduler, click the tabs above to either Request a time slot"
-				+ " View the schedule or, if your're the principal, Approve a time slot request.", 20,20);
+		instructions = new JTextArea("Welcome to the Scheduler, click the tabs above to either request a time slot,"
+				+ " view the schedule or, if    you're the principal, approve or deny a time slot request in the Principal tab.", 60,50);
 		instructions.setEditable(false);
 		instructions.setLineWrap(true);
 		mainPanel.add(instructions);
@@ -111,7 +112,7 @@ public class TheFrame extends JFrame {
 		tabbedPane.add("Schedule", schedPanel);
 		tabbedPane.add("Principal", principal);
 		add(tabbedPane);
-		setSize(300,400);
+		setSize(1000,650);
 	}
 	
 	public static void main(String[] args) {
@@ -120,3 +121,4 @@ public class TheFrame extends JFrame {
 		tf.setVisible(true);	
 	}
 }
+
