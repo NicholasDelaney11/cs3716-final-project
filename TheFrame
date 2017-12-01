@@ -1,0 +1,122 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+public class TheFrame extends JFrame {
+	ArrayList<Booking> approvedBookings = new ArrayList<Booking>();
+	ArrayList<Booking> possibleBookings = new ArrayList<Booking>();
+	
+	JPanel schedPanel = new JPanel();
+	JPanel mainPanel = new JPanel();
+	JPanel reqSpace = new JPanel();
+	JPanel principal = new JPanel();
+	
+	//Home tab components.
+	JTextArea instructions;
+	
+	//Schedule tab components.
+	JLabel schedLabel = new JLabel("Schedule:");
+	static JTextArea schedDisplay = new JTextArea(20,30);
+	JScrollPane scrollPane;
+	
+	//Request space tab components.
+	JLabel labelRoom = new JLabel("Room:");
+	JTextField textRoom = new JTextField(10);
+	JLabel labelActivity = new JLabel("Activity:");
+	JTextField textActivity = new JTextField(10);
+	JLabel labelName = new JLabel("Name:");
+	JTextField textName = new JTextField(10);
+	JLabel labelDate = new JLabel("Date:");
+	JTextField textDate = new JTextField(10);
+	JLabel labelTime = new JLabel("Time:");
+	JLabel labelFrom = new JLabel("From:");
+	JTextField textFrom = new JTextField(10);
+	JLabel labelTo = new JLabel("To:");
+	JTextField textTo = new JTextField(10);
+	JButton submitReq;
+	
+	//Principal components.
+	JLabel labelPendingReq = new JLabel("Pending Requests:");
+	JComboBox<String> pendingReqComboBox = new JComboBox<String>();
+	JButton denyReqButton = new JButton("Deny");
+	JButton approveReqButton = new JButton("Approve");
+	
+	JTabbedPane tabbedPane = new JTabbedPane();
+	
+	public TheFrame() {
+		
+		denyReqButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    }
+		});
+		approveReqButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	String approvedReq = (String) pendingReqComboBox.getSelectedItem();
+		    	schedDisplay.append(approvedReq + "\n\n" );
+		    	
+		    }
+		});
+		principal.add(labelPendingReq);
+		principal.add(pendingReqComboBox);
+		principal.add(approveReqButton);
+		principal.add(denyReqButton);
+		
+		submitReq = new JButton("Request Space");
+		submitReq.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	String r = textRoom.getText();
+		    	String a = textActivity.getText();
+		    	String n = textName.getText();
+		    	String d = textDate.getText();
+		    	String f = textFrom.getText();
+		    	String t = textTo.getText();
+		    	Booking newBooking = new Booking(r,a,n,d,f,t);
+		    	possibleBookings.add(newBooking);
+		    	pendingReqComboBox.addItem(Booking.toString(newBooking));
+		    }
+		});
+		reqSpace.add(labelRoom);
+		reqSpace.add(textRoom);
+		reqSpace.add(labelActivity);
+		reqSpace.add(textActivity);
+		reqSpace.add(labelName);
+		reqSpace.add(textName);
+		reqSpace.add(labelDate);
+		reqSpace.add(textDate);
+		reqSpace.add(labelTime);
+		reqSpace.add(labelFrom);
+		reqSpace.add(textFrom);
+		reqSpace.add(labelTo);
+		reqSpace.add(textTo);
+		reqSpace.add(submitReq);
+		
+		instructions = new JTextArea("Welcome to Scheduler, click the tabs above to either Request a time slot"
+				+ " View the schedule or, if your're the principal, Approve a time slot request.", 20,20);
+		instructions.setEditable(false);
+		instructions.setLineWrap(true);
+		mainPanel.add(instructions);
+		
+	    scrollPane = new JScrollPane(schedDisplay);
+		schedDisplay.setEditable(false);
+		schedDisplay.setLineWrap(true);
+		schedPanel.add(schedLabel);
+		schedPanel.add(schedDisplay);
+		schedPanel.add(scrollPane);
+		
+		tabbedPane.add("Home", mainPanel);
+		tabbedPane.add("Request Time Slot", reqSpace);
+		tabbedPane.add("Schedule", schedPanel);
+		tabbedPane.add("Principal", principal);
+		add(tabbedPane);
+		setSize(300,400);
+	}
+	
+	public static void main(String[] args) {
+		TheFrame tf = new TheFrame();
+		tf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		tf.setVisible(true);	
+	}
+}
